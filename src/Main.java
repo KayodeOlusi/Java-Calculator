@@ -52,9 +52,9 @@ public class Main extends JFrame implements ActionListener {
             createButton(String.valueOf(i));
         }
 
-        ArrayList<String> buttons = new ArrayList<>(Arrays.asList("0", "+", "-", "*", "/", "C", "="));
-        for (String button : buttons) {
-            createButton(button);
+        ArrayList<String> specialChar = new ArrayList<>(Arrays.asList("0", "+", "-", "*", "/", "C", "="));
+        for (String c : specialChar) {
+            createButton(c);
         }
     }
 
@@ -64,21 +64,13 @@ public class Main extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("+")) {
-            previousNumber = Integer.parseInt(currentNumber.toString());
-            currentNumber = new StringBuilder();
-            currentOperator = "+";
+            evaluate("+");
         } else if (e.getActionCommand().equals("-")) {
-            previousNumber = Integer.parseInt(currentNumber.toString());
-            currentNumber = new StringBuilder();
-            currentOperator = "-";
+            evaluate("-");
         } else if (e.getActionCommand().equals("*")) {
-            previousNumber = Integer.parseInt(currentNumber.toString());
-            currentNumber = new StringBuilder();
-            currentOperator = "*";
+            evaluate("*");
         } else if (e.getActionCommand().equals("/")) {
-            previousNumber = Integer.parseInt(currentNumber.toString());
-            currentNumber = new StringBuilder();
-            currentOperator = "/";
+            evaluate("/");
         } else if (e.getActionCommand().equals("C")) {
             previousNumber = 0;
             currentNumber = new StringBuilder();
@@ -95,19 +87,21 @@ public class Main extends JFrame implements ActionListener {
         }
     }
 
+    private void evaluate(String sign) {
+        previousNumber = Integer.parseInt(currentNumber.toString());
+        currentNumber = new StringBuilder();
+        currentOperator = sign;
+    }
+
     private int getResult() {
         int currentNumberInt = Integer.parseInt(currentNumber.toString());
-        int result = 0;
 
-        if (currentOperator.equals("+")) {
-            result = previousNumber + currentNumberInt;
-        } else if (currentOperator.equals("-")) {
-            result = previousNumber - currentNumberInt;
-        } else if (currentOperator.equals("*")) {
-            result = previousNumber * currentNumberInt;
-        } else if (currentOperator.equals("/")) {
-            result = previousNumber / currentNumberInt;
-        }
-        return result;
+        return switch (currentOperator) {
+            case "+" -> previousNumber + currentNumberInt;
+            case "-" -> previousNumber - currentNumberInt;
+            case "*" -> previousNumber * currentNumberInt;
+            case "/" -> previousNumber / currentNumberInt;
+            default -> 0;
+        };
     }
 }
