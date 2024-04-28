@@ -26,7 +26,7 @@ public class Main extends JFrame implements ActionListener {
 
     void setUpFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 800);
+        setSize(450, 800);
         setTitle("Calculator");
 
         label = new JLabel("0", SwingConstants.RIGHT);
